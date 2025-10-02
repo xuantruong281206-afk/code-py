@@ -29,27 +29,26 @@ class EmailValidator:
     def __validate_domain(self, domain):
         return domain in self.domains
 
-    def validate(self, email):
-        try:
-            username, rest = email.split("@")
-            mail, domain = rest.split(".")
-        except ValueError:
-            return False
+    def validate(self, emails):
+        email = emails.partition("@")
+        name = email[0]
+        b = email[2].partition(".")
+        mail = b[0]
+        do = b[2]
 
-        return (self.__validate_name(username) and
-                self.__validate_mail(mail) and
-                self.__validate_domain(domain))
+        return self.__validate_name(name) == self.__validate_mail(mail) == self.__validate_domain(do)
 mails = ["gmail", "softuni"]
 domains = ["com", "bg"]
 email_validator = EmailValidator(6, mails, domains)
 
-print(email_validator.validate("pe77er@gmail.com"))   
+print(email_validator.validate("pe77er@gmail.com"))    
 print(email_validator.validate("georgios@gmail.net")) 
 print(email_validator.validate("stamatito@abv.net"))  
 print(email_validator.validate("abv@softuni.bg"))     
+
 ####
 class Mammal:
-    __kingdom = "animals"   # private class attribute
+    __kingdom = "animals"  
 
     def __init__(self, name, type, sound):
         self.name = name
